@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flora & Memories Journal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #fcf9f5;
+        }
+        .font-serif-aesthetic {
+            font-family: 'Playfair Display', serif;
+        }
+        /* Animasi Kelopak Bunga */
+        .petal {
+            position: absolute;
+            background: radial-gradient(circle, #ffccd5 0%, rgba(255,255,255,0) 70%);
+            border-radius: 50% 0 50% 50%;
+            pointer-events: none;
+            opacity: 0.6;
+            animation: fall linear infinite;
+        }
+        @keyframes fall {
+            0% { transform: translateY(-20px) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.6; }
+            90% { opacity: 0.6; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body class="text-stone-800 overflow-x-hidden">
+
+    <div id="petal-container" class="fixed inset-0 pointer-events-none z-50 overflow-hidden"></div>
+
+    <header class="relative min-h-screen flex items-center justify-center bg-gradient-to-b from-[#ebe1d5] via-[#f7f1eb] to-[#fcf9f5] px-4 overflow-hidden">
+        <div class="absolute top-[-10%] right-[-10%] w-[40vw] h-[40vw] bg-[#eedec9] rounded-full filter blur-[100px] opacity-60"></div>
+        <div class="absolute bottom-[-10%] left-[-10%] w-[50vw] h-[50vw] bg-[#e3ecd7] rounded-full filter blur-[120px] opacity-60"></div>
+
+        <div class="text-center z-10 max-w-4xl space-y-6 px-4">
+            <span class="inline-block px-4 py-1 bg-[#8fa874]/10 text-[#607746] rounded-full text-xs font-semibold tracking-widest uppercase border border-[#8fa874]/20 animate-fade-in">
+                ✿ Premium Botanical Journal ✿
+            </span>
+            <h1 class="font-serif-aesthetic text-5xl md:text-8xl text-[#4a3f35] font-semibold leading-tight">
+                Flora & <span class="italic text-[#c2956e]">Memories</span>
+            </h1>
+            <p class="text-base md:text-xl text-stone-600 max-w-2xl mx-auto font-light leading-relaxed">
+                Mengabadikan harmoni keindahan bunga di <span class="font-semibold text-[#607746]">PIAT UGM</span> dan pesona agung budaya bersejarah Nusantara.
+            </p>
+            <div class="pt-6">
+                <a href="#gallery" class="inline-flex items-center gap-3 bg-[#4a3f35] text-[#fcf9f5] px-8 py-3.5 rounded-full font-medium shadow-xl shadow-stone-900/10 hover:bg-[#c2956e] hover:scale-105 transition-all duration-300 group">
+                    Buka Galeri Foto
+                    <i class="fa-solid fa-arrow-down text-xs group-hover:translate-y-1 transition-transform"></i>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <section id="gallery" class="py-24 max-w-7xl mx-auto px-4 md:px-8">
+        
+        <div class="text-center max-w-2xl mx-auto mb-16 space-y-4">
+            <h2 class="font-serif-aesthetic text-4xl md:text-5xl text-[#4a3f35] font-semibold">Lembar Perjalanan</h2>
+            <div class="w-16 h-[2px] bg-[#c2956e] mx-auto"></div>
+            <p class="text-stone-500 text-sm md:text-base">Gunakan filter di bawah ini untuk menjelajahi setiap sudut dokumentasi cerita kita.</p>
+            
+            <div class="flex flex-wrap justify-center gap-2 pt-6">
+                <button onclick="filterGallery('all')" id="btn-all" class="filter-btn active px-6 py-2 rounded-full text-sm font-medium transition-all duration-300 border border-[#4a3f35] bg-[#4a3f35] text-white shadow-md">Semua Cerita</button>
+                <button onclick="filterGallery('piat')" id="btn-piat" class="filter-btn px-6 py-2 rounded-full text-sm font-medium transition-all duration-300 border border-stone-200 bg-white text-stone-600 hover:border-[#8fa874] hover:text-[#607746]">Inovasi Hijau (PIAT UGM)</button>
+                <button onclick="filterGallery('culture')" id="btn-culture" class="filter-btn px-6 py-2 rounded-full text-sm font-medium transition-all duration-300 border border-stone-200 bg-white text-stone-600 hover:border-[#c2956e] hover:text-[#c2956e]">Sejarah & Budaya</button>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="gallery-grid">
+            
+            <div class="gallery-item piat bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 border border-stone-100 group cursor-pointer" onclick="openLightbox('foto anggrel.jpeg', 'Konservasi Anggrek Indah', 'Budidaya tanaman anggrek cantik beraneka warna di dalam rumah kaca PIAT UGM.')">
+                <div class="relative overflow-hidden h-72 bg-stone-100">
+                    <img src="foto anggrel.jpeg" alt="Anggrek" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                    <span class="absolute top-4 left-4 bg-[#e3ecd7] text-[#607746] text-xs font-semibold px-3 py-1 rounded-full border border-[#8fa874]/30">🌿 Flora</span>
+                </div>
+                <div class="p-6">
+                    <h3 class="font-serif-aesthetic text-xl text-[#4a3f35] group-hover:text-[#c2956e] transition-colors">Budidaya Anggrek Cantik</h3>
+                    <p class="text-stone-500 text-xs mt-2 leading-relaxed">Melihat langsung pesona bunga anggrek yang tumbuh subur terawat dengan sistem botani modern.</p>
+                </div>
+            </div>
+
+            <div class="gallery-item piat bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 border border-stone-100 group cursor-pointer" onclick="openLightbox('foto piat ugm.jpeg', 'Gerbang Utama PIAT UGM', 'Pusat Inovasi Agroteknologi Universitas Gadjah Mada sebagai sentra edukasi lingkungan.')">
+                <div class="relative overflow-hidden h-72 bg-stone-100">
+                    <img src="foto piat ugm.jpeg" alt="PIAT UGM" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                    <span class="absolute top-4 left-4 bg-[#e3ecd7] text-[#607746] text-xs font-semibold px-3 py-1 rounded-full border border-[#8fa874]/30">📍 Lokasi</span>
+                </div>
+                <div class="p-6">
+                    <h3 class="font-serif-aesthetic text-xl text-[#4a3f35] group-hover:text-[#c2956e] transition-colors">Pusat Inovasi Agroteknologi</h3>
+                    <p class="text-stone-500 text-xs mt-2 leading-relaxed">Tengara utama PIAT UGM yang menjadi gerbang utama pembuka wawasan seputar dunia sains pertanian.</p>
+                </div>
+            </div>
+
+            <div class="gallery-item piat bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 border border-stone-100 group cursor-pointer" onclick="openLightbox('kebun organik.jpeg', 'Kebun Organik Berkelanjutan', 'Area perkebunan sayur ramah lingkungan tanpa bahan kimia sintetis.')">
+                <div class="relative overflow-hidden h-72 bg-stone-100">
+                    <img src="kebun organik.jpeg" alt="Kebun Organik" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                    <span class="absolute top-4 left-4 bg-[#e3ecd7] text-[#607746] text-xs font-semibold px-3 py-1 rounded-full border border-[#8fa874]/30">🌱 Edukasi</span>
+                </div>
+                <div class="p-6">
+                    <h3 class="font-serif-aesthetic text-xl text-[#4a3f35] group-hover:text-[#c2956e] transition-colors">Eksplorasi Kebun Organik</h3>
+                    <p class="text-stone-500 text-xs mt-2 leading-relaxed">Belajar mengenai konsep kemandirian pangan lewat cara penanaman vegetasi alami yang sehat.</p>
+                </div>
+            </div>
+
+            <div class="gallery-item piat bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 border border-stone-100 group cursor-pointer" onclick="openLightbox('foto produk eco enzym.jpeg', 'Pembuatan Eco Enzyme', 'Produk cairan multifungsi hasil fermentasi sampah organik rumah tangga.')">
+                <div class="relative overflow-hidden h-72 bg-stone-100">
+                    <img src="foto produk eco enzym.jpeg" alt="Eco Enzyme" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                    <span class="absolute top-4 left-4 bg-[#e3ecd7] text-[#607746] text-xs font-semibold px-3 py-1 rounded-full border border-[#8fa874]/30">🧪 Praktikum</span>
+                </div>
+                <div class="p-6">
+                    <h3 class="font-serif-aesthetic text-xl text-[#4a3f35] group-hover:text-[#c2956e] transition-colors">Inovasi Eco-Enzyme</h3>
+                    <p class="text-stone-500 text-xs mt-2 leading-relaxed">Menyaksikan pemanfaatan kulit buah-buahan menjadi pembersih alami yang ramah lingkungan.</p>
+                </div>
+            </div>
+
+            <div class="gallery-item piat bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 border border-stone-100 group cursor-pointer" onclick="openLightbox('foto produk pesnab.jpeg', 'Pestisida Nabati', 'Cairan pengusir hama tanaman buatan lokal yang aman bagi ekosistem.')">
+                <div class="relative overflow-hidden h-72 bg-stone-100">
+                    <img src="foto produk pesnab.jpeg" alt="Pesnab" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                    <span class="absolute top-4 left-4 bg-[#e3ecd7] text-[#607746] text-xs font-semibold px-3 py-1 rounded-full border border-[#8fa874]/30">🍃 Teknologi</span>
+                </div>
+                <div class="p-6">
+                    <h3 class="font-serif-aesthetic text-xl text-[#4a3f35] group-hover:text-[#c2956e] transition-colors">Pestisida Nabati (Pesnab)</h3>
+                    <p class="text-stone-500 text-xs mt-2 leading-relaxed">Mempelajari cara menekan serangan hama tanaman menggunakan ekstrak daun-daunan alami alami.</p>
+                </div>
+            </div>
+
+            <div class="gallery-item piat bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 border border-stone-100 group cursor-pointer" onclick="openLightbox('foto pengolahan sampah piat.jpeg', 'Rumah Kompos & Sampah', 'Sistem pengolahan limbah organik terpadu berskala besar.')">
+                <div class="relative overflow-hidden h-72 bg-stone-100">
+                    <img src="foto pengolahan sampah piat.jpeg" alt="Pengolahan Sampah" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                    <span class="absolute top-4 left-4 bg-[#e3ecd7] text-[#607746] text-xs font-semibold px-3 py-1 rounded-full border border-[#8fa874]/30">♻️ Recycle</span>
+                </div>
+                <div class="p-6">
+                    <h3 class="font-serif-aesthetic text-xl text-[#4a3f35] group-hover:text-[#c2956e] transition-colors">Pengelolaan Sampah Terpadu</h3>
+                    <p class="text-stone-500 text-xs mt-2 leading-relaxed">Belajar bertanggung jawab penuh terhadap limbah demi mewujudkan bumi masa depan yang lebih hijau.</p>
+                </div>
+            </div>
+
+            <div class="gallery-item piat bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 border border-stone-100 group cursor-pointer" onclick="openLightbox('foto bareng di piat.jpeg', 'Kebersamaan Belajar', 'Senyum hangat seluruh rekan-rekan kelas dalam kunjungan studi lapangan.')">
+                <div class="relative overflow-hidden h-72 bg-stone-100">
+                    <img src="foto bareng di piat.jpeg" alt="Foto Bareng" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                    <span class="absolute top-4 left-4 bg-sky-500/10 text-sky-600 text-xs font-semibold px-3 py-1 rounded-full border border-sky-500/20">✨ Sahabat</span>
+                </div>
+                <div class="p-6">
+                    <h3 class="font-serif-aesthetic text-xl text-[#4a3f35] group-hover:text-[#c2956e] transition-colors">Solidaritas di Ladang Edukasi</h3>
+                    <p class="text-stone-500 text-xs mt-2 leading-relaxed">Momen ceria dan kebersamaan berharga yang tak akan terlupakan di sepanjang masa-masa SMA.</p>
+                </div>
+            </div>
+
+            <div class="gallery-item culture bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 border border-stone-100 group cursor-pointer" onclick="openLightbox('mangkunegaran tour guide.jpeg', 'Edukasi Budaya Surakarta', 'Dipandu langsung oleh abdi dalem berpengalaman mengenai sejarah keraton.')">
+                <div class="relative overflow-hidden h-72 bg-stone-100">
+                    <img src="mangkunegaran tour guide.jpeg" alt="Tour Guide" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                    <span class="absolute top-4 left-4 bg-amber-500/10 text-amber-700 text-xs font-semibold px-3 py-1 rounded-full border border-amber-500/20">🏛️ Budaya</span>
+                </div>
+                <div class="p-6">
+                    <h3 class="font-serif-aesthetic text-xl text-[#4a3f35] group-hover:text-[#c2956e] transition-colors">Kisah Klasik Mangkunegaran</h3>
+                    <p class="text-stone-500 text-xs mt-2 leading-relaxed">Mendengarkan penuturan sejarah yang kaya filosofi hidup langsung dari Pura Mangkunegaran, Solo.</p>
+                </div>
+            </div>
+
+            <div class="gallery-item culture bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 border border-stone-100 group cursor-pointer" onclick="openLightbox('logo mg.jpeg', 'Simbol Agung Praja Mangkunegaran', 'Mempelajari arti filosofis di balik logo kebesaran istana.')">
+                <div class="relative overflow-hidden h-72 bg-stone-100">
+                    <img src="logo mg.jpeg" alt="Logo Mangkunegaran" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                    <span class="absolute top-4 left-4 bg-amber-500/10 text-amber-700 text-xs font-semibold px-3 py-1 rounded-full border border-amber-500/20">📜 Sejarah</span>
+                </div>
+                <div class="p-6">
+                    <h3 class="font-serif-aesthetic text-xl text-[#4a3f35] group-hover:text-[#c2956e] transition-colors">Simbolisme Kebesaran Istana</h3>
+                    <p class="text-stone-500 text-xs mt-2 leading-relaxed">Menggali makna mendalam ukiran ornamen tradisional lambang keraton yang sarat muatan doa.</p>
+                </div>
+            </div>
+
+            <div class="gallery-item culture bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 border border-stone-100 group cursor-pointer" onclick="openLightbox('foto titik 0 jogja.jpeg', 'Senja di Titik Nol Kilometer', 'Melintasi pusat sejarah peradaban dan jalanan ikonik kota Jogja.')">
+                <div class="relative overflow-hidden h-72 bg-stone-100">
+                    <img src="foto titik 0 jogja.jpeg" alt="Titik Nol" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                    <span class="absolute top-4 left-4 bg-amber-500/10 text-amber-700 text-xs font-semibold px-3 py-1 rounded-full border border-amber-500/20">🌆 Malioboro</span>
+                </div>
+                <div class="p-6">
+                    <h3 class="font-serif-aesthetic text-xl text-[#4a3f35] group-hover:text-[#c2956e] transition-colors">Titik Nol Kilometer Jogja</h3>
+                    <p class="text-stone-500 text-xs mt-2 leading-relaxed">Menikmati lanskap arsitektur kolonial peninggalan sejarah di perempatan paling legendaris Yogyakarta.</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <div id="lightbox" class="fixed inset-0 bg-stone-900/80 backdrop-blur-md hidden justify-center items-center z-[100] p-4 transition-opacity duration-300 opacity-0" onclick="closeLightbox()">
+        <div class="bg-white rounded-2xl max-w-3xl w-full overflow-hidden shadow-2xl transform scale-95 transition-transform duration-300 relative" onclick="event.stopPropagation()">
+            <button onclick="closeLightbox()" class="absolute top-4 right-4 w-10 h-10 bg-black/40 hover:bg-black/60 text-white rounded-full flex items-center justify-center transition-colors">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="md:flex">
+                <div class="md:w-3/5 h-[450px] bg-stone-100">
+                    <img id="lightbox-img" src="" alt="" class="w-full h-full object-cover">
+                </div>
+                <div class="md:w-2/5 p-8 flex flex-col justify-center space-y-3">
+                    <span class="text-xs font-semibold uppercase tracking-wider text-[#c2956e]">Detail Momen</span>
+                    <h4 id="lightbox-title" class="font-serif-aesthetic text-2xl text-[#4a3f35] font-semibold"></h4>
+                    <p id="lightbox-desc" class="text-stone-500 text-sm leading-relaxed"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-[#4a3f35] text-[#fcf9f5]/60 py-12 text-center text-xs tracking-widest uppercase border-t border-stone-800">
+        <p class="text-[#fcf9f5] font-serif-aesthetic italic text-sm normal-case tracking-normal mb-2">"Bunga mekar di musimnya, kenangan abadi di hati."</p>
+        <p>&copy; 2026 Jurnal Kunjungan Edukasi SMA. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        // 1. Pembuat Efek Kelopak Bunga Berguguran secara Acak
+        function createPetal() {
+            const container = document.getElementById('petal-container');
+            if(!container) return;
+            const petal = document.createElement('div');
+            petal.classList.add('petal');
+            
+            // Mengatur ukuran, posisi awal, dan durasi jatuh secara acak agar natural
+            const size = Math.random() * 15 + 10;
+            petal.style.width = `${size}px`;
+            petal.style.height = `${size}px`;
+            petal.style.left = `${Math.random() * 100}vw`;
+            petal.style.animationDuration = `${Math.random() * 5 + 5}s`;
+            
+            container.appendChild(petal);
+            
+            // Hapus kelopak setelah animasi selesai agar web tidak lambat
+            setTimeout(() => { petal.remove(); }, 10000);
+        }
+        setInterval(createPetal, 400);
+
+        // 2. Logika Saring/Filter Galeri Tanpa Reload Halaman
+        function filterGallery(category) {
+            const items = document.querySelectorAll('.gallery-item');
+            const buttons = document.querySelectorAll('.filter-btn');
+            
+            // Update Tampilan Tombol Aktif
+            buttons.forEach(btn => {
+                btn.classList.remove('bg-[#4a3f35]', 'text-white', 'shadow-md');
+                btn.classList.add('bg-white', 'text-stone-600', 'border-stone-200');
+            });
+            
+            const activeBtn = document.getElementById(`btn-${category}`);
+            activeBtn.classList.remove('bg-white', 'text-stone-600', 'border-stone-200');
+            activeBtn.classList.add('bg-[#4a3f35]', 'text-white', 'shadow-md');
+
+            // Sembunyikan atau Tampilkan Item Berdasarkan Kategori
+            items.forEach(item => {
+                if (category === 'all' || item.classList.contains(category)) {
+                    item.style.display = 'block';
+                    setTimeout(() => { item.style.opacity = '1'; item.style.transform = 'scale(1)'; }, 10);
+                } else {
+                    item.style.opacity = '0';
+                    item.style.transform = 'scale(0.95)';
+                    setTimeout(() => { item.style.display = 'none'; }, 300);
+                }
+            });
+        }
+
+        // 3. Fungsi Membuka Jendela Pembesar Gambar (Lightbox Modal)
+        function openLightbox(imgSrc, title, desc) {
+            const modal = document.getElementById('lightbox');
+            const modalBox = modal.querySelector('div');
+            
+            document.getElementById('lightbox-img').src = imgSrc;
+            document.getElementById('lightbox-title').innerText = title;
+            document.getElementById('lightbox-desc').innerText = desc;
+            
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                modalBox.classList.remove('scale-95');
+            }, 10);
+        }
+
+        // 4. Fungsi Menutup Jendela Pembesar Gambar
+        function closeLightbox() {
+            const modal = document.getElementById('lightbox');
+            const modalBox = modal.querySelector('div');
+            
+            modal.classList.add('opacity-0');
+            modalBox.classList.add('scale-95');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }, 300);
+        }
+    </script>
+</body>
+</html>
